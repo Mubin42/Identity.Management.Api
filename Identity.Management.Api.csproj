@@ -18,4 +18,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Authentication\" />
+    <Folder Include="Models\Authentication\Login\" />
+    <Folder Include="Models\Authentication\SignUp\" />
+  </ItemGroup>
+
 </Project>

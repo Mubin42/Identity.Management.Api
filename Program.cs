@@ -1,5 +1,4 @@
-using Identity.Management.Api.Data;
-using Microsoft.EntityFrameworkCore;
+using Identity.Management.Api.Configurations;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,12 +14,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddDbContext<AppDbContext>(option =>
-{
-    // Connection string
-    var connectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
-    option.UseNpgsql(connectionStr);
-});
+// Configure services
+builder.Services.AddAppDatabase(builder.Configuration);
 
 
 var app = builder.Build();
