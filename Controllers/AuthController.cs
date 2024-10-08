@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Identity.Management.Api.Dtos.Authentication.Login;
 using Identity.Management.Api.Models.Authentication.SignUp;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -110,13 +111,20 @@ namespace Identity.Management.Api.Controllers
                 expiration = token.ValidTo
             });
         }
+
+        [HttpGet("test")]
+        [Authorize]
+        public IActionResult Test()
+        {
+            return Ok("You are authorized");
+        }
         private JwtSecurityToken GetToken(List<Claim> authClaim)
         {
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"] ?? throw new InvalidOperationException()));
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"] ?? throw new InvalidOperationException()));
 
             var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
+                issuer: _configuration["Jwt:ValidIssuer"],
+                audience: _configuration["Jwt:ValidAudience"],
                 expires: DateTime.Now.AddHours(3),
                 claims: authClaim,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
@@ -124,6 +132,8 @@ namespace Identity.Management.Api.Controllers
 
             return token;
         }
+
+
     }
 
 
