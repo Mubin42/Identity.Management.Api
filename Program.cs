@@ -1,9 +1,27 @@
+using Identity.Management.Api.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    // Add swagger doc version and title
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Identity Management Api",
+    });
+});
+
+builder.Services.AddDbContext<AppDbContext>(option =>
+{
+    // Connection string
+    var connectionStr = builder.Configuration.GetConnectionString("DefaultConnection");
+    option.UseNpgsql(connectionStr);
+});
+
 
 var app = builder.Build();
 
