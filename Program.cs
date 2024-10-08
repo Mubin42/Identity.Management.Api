@@ -17,6 +17,9 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Add Controllers
+builder.Services.AddControllers();
+
 // Configure services
 builder.Services.AddAppDatabase(builder.Configuration);
 
@@ -42,6 +45,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 try
 {
