@@ -19,9 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\Authentication\" />
-    <Folder Include="Models\Authentication\Login\" />
-    <Folder Include="Models\Authentication\SignUp\" />
+    <Folder Include="Dtos\Authentication\Login\" />
   </ItemGroup>
 
 </Project>
